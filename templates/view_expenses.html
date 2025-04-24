@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>View Expenses</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Total Expense</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ total_expense }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Total (Bank)</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ total_bank }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-header">Total (Cash)</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ total_cash }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <form method="POST" action="/view-expenses">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="date_range" class="form-label">Date Range</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" name="start_date">
+                    <input type="date" class="form-control" name="end_date">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="month" class="form-label">Month</label>
+                <select class="form-control" name="month">
+                    <option value="" selected>All Months</option>
+                    {% for month in months %}
+                    <option value="{{ month }}">{{ month }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-control" name="category">
+                    <option value="" selected>All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 mt-4">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="/add-expense" class="btn btn-success">Add Expense</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% for date, expenses in grouped_expenses.items() %}
+<h4 class="mt-4">{{ date }}</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Comment</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.amount }}</td>
+            <td>{{ expense.category }}</td>
+            <td>{{ expense.payment_type }}</td>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.comment }}</td>
+            <td>
+                <a href="/update-expense/{{ expense.id }}" class="btn btn-warning btn-sm">Edit</a>
+                <form method="POST" action="/delete-expense/{{ expense.id }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+{% endblock %}

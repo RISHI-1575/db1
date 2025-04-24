@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Reports</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Category-wise Expense Distribution</h4>
+        {% if graph1 %}
+        <div>{{ graph1|safe }}</div>
+        {% else %}
+        <p>No data available for the pie chart.</p>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h4>Monthly Total Spending</h4>
+        {% if graph2 %}
+        <div>{{ graph2|safe }}</div>
+        {% else %}
+        <p>No data available for the bar chart.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

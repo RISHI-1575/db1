@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Update Expense</h2>
+<form method="POST" action="/update-expense/{{ expense.id }}">
+    <div class="mb-3">
+        <label for="amount" class="form-label">Amount</label>
+        <input type="number" class="form-control" id="amount" name="amount" value="{{ expense.amount }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="payment_type" class="form-label">Payment Type</label>
+        <select class="form-control" id="payment_type" name="payment_type" required>
+            <option value="Bank" {% if expense.payment_type == 'Bank' %}selected{% endif %}>Bank</option>
+            <option value="Cash" {% if expense.payment_type == 'Cash' %}selected{% endif %}>Cash</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-control" id="category" name="category" required>
+            <option value="Food" {% if expense.category == 'Food' %}selected{% endif %}>Food</option>
+            <option value="Travel" {% if expense.category == 'Travel' %}selected{% endif %}>Travel</option>
+            <option value="Bills" {% if expense.category == 'Bills' %}selected{% endif %}>Bills</option>
+            <option value="Entertainment" {% if expense.category == 'Entertainment' %}selected{% endif %}>Entertainment</option>
+            <option value="Shopping" {% if expense.category == 'Shopping' %}selected{% endif %}>Shopping</option>
+            <option value="Other" {% if expense.category == 'Other' %}selected{% endif %}>Other</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" value="{{ expense.date }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" required>{{ expense.description }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="comment" class="form-label">Comment (Optional)</label>
+        <textarea class="form-control" id="comment" name="comment">{{ expense.comment }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Expense</button>
+</form>
+{% endblock %}
