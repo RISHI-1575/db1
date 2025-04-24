@@ -1,0 +1,4 @@
+Flask==2.2.5
+mysql-connector-python==8.0.32
+plotly==5.14.1
+pandas==1.5.3
